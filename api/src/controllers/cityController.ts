@@ -5,8 +5,6 @@ import { fetchNews } from '../services/newsService';
 import { fetchTime } from '../services/timeService';
 import { fetchWeather } from '../services/weatherService';
 import { getCache, setCache } from '../utils/cache';
-import { logger } from '../utils/logger';
-import type { CityData } from '../types';
 
 const buildCacheKey = (city: string) => `city:${city.toLowerCase()}`;
 
@@ -23,7 +21,7 @@ export const getCityInfo = async (
     }
 
     const cacheKey = buildCacheKey(city);
-    const cached = getCache<CityData>(cacheKey);
+    const cached = getCache(cacheKey);
 
     if (cached) {
       return res.json({ ...cached, cached: true });
@@ -38,7 +36,7 @@ export const getCityInfo = async (
 
     const [weather, time, news, currency] = results;
 
-    const cityData: CityData = {
+    const cityData = {
       city,
       country: 'Unknown',
       weather: weather.status === 'fulfilled' ? weather.value : null,
@@ -49,16 +47,14 @@ export const getCityInfo = async (
     };
 
     if (weather.status === 'rejected') {
-      logger.warn('Weather service failed', { city, reason: weather.reason });
+    
     }
+
     if (time.status === 'rejected') {
-      logger.warn('Time service failed', { city, reason: time.reason });
     }
     if (news.status === 'rejected') {
-      logger.warn('News service failed', { city, reason: news.reason });
     }
     if (currency.status === 'rejected') {
-      logger.warn('Currency service failed', { city, reason: currency.reason });
     }
 
     setCache(cacheKey, cityData);
