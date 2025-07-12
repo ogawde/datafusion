@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataFusion Lookup</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>DataFusion Lookup</h1>
+        <p>Check the latest city intelligence in a single request.</p>
+      </header>
+
+      <section class="controls">
+        <input
+          id="city-input"
+          type="text"
+          placeholder="Enter a city"
+          autocomplete="off"
+        />
+        <button id="search-button" type="button">Fetch</button>
+      </section>
+
+      <section id="status-banner" role="alert" hidden></section>
+
+      <section id="results" hidden>
+        <article id="weather-card" class="result"></article>
+        <article id="time-card" class="result"></article>
+        <article id="news-card" class="result"></article>
+        <article id="currency-card" class="result"></article>
+        <article id="raw-card" class="result"></article>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
+
