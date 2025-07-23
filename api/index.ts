@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
 
-import cityRoutes from '../api/src/routes/cityRoutes';
+import cityRoutes from './src/routes/cityRoutes';
 
 dotenv.config();
 
@@ -20,8 +20,13 @@ app.get('/health', (_req, res) => {
 
 app.use('/api', cityRoutes);
 
+// Only listen if not in Vercel production environment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// REQUIRED: Export the app for Vercel
+export default app;
 
